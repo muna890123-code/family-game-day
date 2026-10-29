@@ -56,7 +56,10 @@ exports.handler = async (event) => {
             },
           ],
           generationConfig: {
-            maxOutputTokens: 2000,
+            maxOutputTokens: 8192,
+            thinkingConfig: {
+              thinkingBudget: 0
+            },
             temperature: 0.8,
           },
         }),
