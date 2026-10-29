@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Family Game Day · UAE</title>
+<style>
+:root{--bg:#f6efe0;--card:#fffaf0;--ink:#2a2118;--mut:#7a6a55;--gold:#b8860b;--green:#0b6b4a;--red:#c0392b;--a:#0b6b4a;--b:#b8860b;--line:#e3d5b8;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#12100d;--card:#1d1a15;--ink:#f3ead7;--mut:#a89a82;--gold:#e0b44c;--green:#2fb386;--red:#ef6a5a;--a:#2fb386;--b:#e0b44c;--line:#352f25}}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif}
+main{max-width:720px;margin:0 auto;padding:14px}
+h1{font-size:1.3rem;margin:0}h2{margin:.2rem 0 .6rem}
+.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.steps{display:flex;gap:4px;margin-bottom:14px}.steps i{flex:1;height:6px;border-radius:3px;background:var(--line)}.steps i.on{background:var(--gold)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:12px}
+.grid{display:grid;gap:10px}.g2{grid-template-columns:1fr 1fr}
+.game{text-align:left;display:flex;gap:12px;align-items:center;cursor:pointer;width:100%;color:var(--ink);font:inherit}
+.game .e{font-size:2rem}.game b{display:block}.game small{color:var(--mut)}
+button{font:inherit;border:0;border-radius:12px;padding:12px 16px;cursor:pointer;background:var(--gold);color:#1a1405;font-weight:600}
+button.sec{background:transparent;color:var(--ink);border:1px solid var(--line)}button.ok{background:var(--green);color:#fff}button.no{background:var(--red);color:#fff}
+button:disabled{opacity:.4}
+input,select{font:inherit;padding:12px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--ink);width:100%}
+.row{display:flex;gap:8px;align-items:center}.row>*{flex:1}.row>.fit{flex:none}
+.pill{display:inline-block;padding:3px 10px;border-radius:99px;font-size:.8rem;font-weight:600;color:#fff}.A{background:var(--a)}.B{background:var(--b);color:#1a1405}
+.timer{font-size:3rem;font-weight:800;text-align:center;font-variant-numeric:tabular-nums}.timer.low{color:var(--red)}
+.big{font-size:1.25rem;line-height:1.5}.mut{color:var(--mut)}.tag{font-size:.75rem;color:var(--mut)}
+.score{display:flex;justify-content:space-around;text-align:center}.score b{display:block;font-size:2.2rem}
+table{width:100%;border-collapse:collapse}td,th{padding:8px;border-bottom:1px solid var(--line);text-align:center}
+ul.r{padding-left:1.2rem;margin:.4rem 0}ul.r li{margin:.3rem 0}
+.pl{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--line)}
+.win{text-align:center;font-size:1.6rem;font-weight:800;color:var(--gold)}
+/* minimal redesign */
+:root{--bg:#f7f3ea;--card:#fff;--ink:#1f2a24;--mut:#7b8178;--gold:#c9a24b;--green:#0f5c45;--red:#b8453a;--a:#0f5c45;--b:#c2703d;--line:#ece5d4;--sh:0 1px 2px rgba(31,42,36,.05),0 10px 28px rgba(31,42,36,.07)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e1411;--card:#16201b;--ink:#eef2ec;--mut:#8d9a91;--gold:#d8b45c;--green:#3fbf91;--red:#ef7d6e;--a:#3fbf91;--b:#e08b55;--line:#25322b;--sh:0 10px 28px rgba(0,0,0,.4)}}
+body{background:radial-gradient(circle at 100% 0,rgba(201,162,75,.14),transparent 45%),var(--bg);letter-spacing:-.01em}
+main{max-width:560px;padding:20px 16px 48px}
+h1{font-size:1.05rem;font-weight:700;letter-spacing:.02em}
+h2{font-size:1.6rem;font-weight:750;letter-spacing:-.02em;margin:.2rem 0 .9rem}
+.steps{gap:6px}.steps i{height:3px}.steps i.on{background:var(--green)}
+.card{border:0;box-shadow:var(--sh);border-radius:22px;padding:20px;margin-bottom:14px}
+button{border-radius:14px;padding:14px 18px;background:var(--ink);color:var(--bg);font-weight:600;transition:transform .1s,opacity .2s}
+button:active{transform:scale(.98)}
+button.sec{background:transparent;color:var(--ink);border:1px solid var(--line)}
+button.ok{background:var(--green);color:#fff}button.no{background:var(--red);color:#fff}
+button.game{background:var(--card);color:var(--ink);font-weight:500;gap:16px;padding:18px}
+.game .e{font-size:1.6rem;width:56px;height:56px;border-radius:18px;background:var(--bg);display:grid;place-items:center;flex:none}
+.game b{font-size:1.05rem}.game::after{content:"›";margin-left:auto;font-size:1.6rem;color:var(--mut)}
+input,select{border-radius:14px;padding:14px;background:var(--card)}
+.pill{font-weight:600;padding:3px 11px}
+.timer{font-size:4.2rem;font-weight:300;letter-spacing:-.04em}
+.score b{font-size:2.6rem;font-weight:700}
+.big{font-size:1.2rem;line-height:1.55}
+.tag{text-transform:uppercase;letter-spacing:.08em;font-size:.68rem;font-weight:600}
+.bar{height:4px;background:var(--line);border-radius:2px;overflow:hidden;margin:4px 0 14px}.bar i{display:block;height:100%;background:var(--green);transition:width 1s linear}
+th{font-size:.7rem;text-transform:uppercase;letter-spacing:.08em;color:var(--mut);font-weight:600}
+.win{font-size:2rem;letter-spacing:-.02em}
+</style></head><body><main>
+<div class="top"><h1>🇦🇪 Family Game Day</h1><button class="sec" onclick="restart()" style="padding:6px 12px">Reset</button></div>
+<div class="steps" id="steps"></div><div id="app"></div></main>
+<script>
+const ai={use:async()=>{
+ const ask=async p=>{const r=await fetch("/.netlify/functions/ai",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({prompt:p})});if(!r.ok)throw new Error("AI unavailable");return(await r.json()).text};
+ const sm=async p=>({text:await ask(p)});
+ sm.json=async p=>JSON.parse((await ask(p)).replace(/```json|```/g,"").trim());
+ return sm}};
+const G={
+football:{n:"Football Showdown",e:"⚽",d:"Two halves, host-logged goals, AI match missions"},
+riddle:{n:"Majlis Riddles",e:"🏺",d:"Heritage riddles read aloud; the host judges",t:45,pts:"10 points for a correct answer",pm:10},
+pearl:{n:"Pearl Diver Trivia",e:"🦪",d:"Solo game: every player scores for themselves",ind:1,t:30,pts:"10 points for a correct answer",pm:10},
+souq:{n:"Souq Word Rush",e:"🛍️",d:"Name as many items in a category as you can",t:30,pts:"1 point per valid word, counted by the host",pm:1},
+landmark:{n:"Landmark Detective",e:"🕌",d:"Three text clues: fewer clues means more points",t:45,pts:"5 points after clue 1, 3 after clue 2, 1 after clue 3",pm:5}};
+const BANK={
+riddle:[{q:"I am brewed in a dallah and poured in tiny cups to welcome guests, always served with dates. What am I?",a:"Arabic coffee (gahwa)"},{q:"My hump stores fat, my feet are wide for sand, and I carried caravans across the desert. What am I?",a:"A camel"},{q:"I wear a small hood, sit on a glove and hunt with sharp eyes. What am I?",a:"A falcon"},{q:"I am a tower that catches the breeze and cools old Gulf houses without electricity. What am I?",a:"A wind tower (barjeel)"},{q:"I dive with a nose clip and a stone, holding my breath to find treasure inside shells. Who am I?",a:"A pearl diver (ghawwas)"}],
+pearl:[{q:"What is the traditional wooden boat of the Gulf called?",a:"A dhow"},{q:"In which year was the UAE founded?",a:"1971"},{q:"Which bird is the national bird of the UAE?",a:"The falcon"},{q:"Name the slow-cooked wheat and meat dish popular in Ramadan.",a:"Harees"},{q:"Which traditional dance features rows of men and swaying canes?",a:"Al Ayyala"}],
+souq:[{q:"Emirati foods and drinks"},{q:"Things you find in a traditional souq"},{q:"Animals of the desert"},{q:"Sea creatures of the Arabian Gulf"},{q:"Places and landmarks in the UAE"}],
+landmark:[{a:"Burj Khalifa",clues:["It stands in Downtown Dubai.","It is the tallest building in the world.","It opened in 2010 and is 828 metres tall."]},{a:"Sheikh Zayed Grand Mosque",clues:["It is in Abu Dhabi and has 82 domes.","It holds one of the largest hand-knotted carpets in the world.","It is named after the UAE’s founding father."]},{a:"Louvre Abu Dhabi",clues:["It is a museum on Saadiyat Island.","Its huge dome makes a “rain of light” effect.","It was designed by architect Jean Nouvel."]},{a:"Al Fahidi Fort",clues:["It is in Dubai’s Al Fahidi district.","It is one of the oldest buildings in Dubai.","It houses the Dubai Museum."]},{a:"Jebel Jais",clues:["It is in Ras Al Khaimah.","It is the highest peak in the UAE.","It is home to a record-setting zipline."]}],
+football:[{q:"Team bonus: score the first goal of this half and earn +1."},{q:"Fair-play bonus: finish the half with no fouls called against your team for +1."},{q:"Spread the joy: a different scorer for each goal this half earns +1."},{q:"Quick thinkers: the captain names three UAE football clubs in 15 seconds for +1."},{q:"Clean sheet: concede nothing this half and earn +1."}]};
+const AIP={riddle:'a short riddle about Emirati heritage (desert, falcons, dhows, coffee, pearling, architecture). JSON: {"q":"riddle","a":"answer"}',pearl:'a family-friendly trivia question about UAE history, pearling or Gulf culture with a short answer. JSON: {"q":"question","a":"answer"}',souq:'a category for a naming game linked to UAE culture. JSON: {"q":"category"}',landmark:'a UAE landmark with three clues from vague to obvious. JSON: {"a":"landmark","clues":["","",""]}',football:'a football match mission: a rule-based team bonus the host can verify with no extra movement. JSON: {"q":"mission text"}'};
+const S0=()=>({step:1,game:null,players:[],ps:[],rounds:3,round:1,turn:0,pi:{A:0,B:0},sc:{A:0,B:0},hist:[],card:null,src:"",loading:false,left:0,run:false,reveal:false,goals:{A:0,B:0},half:1,tb:false,clue:1,words:0,pen:false});
+let S=S0(),T=null,used={};
+const $=id=>document.getElementById(id),esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const fb=()=>S.game==="football";
+function go(n){S.step=n;if(n===6)recap();draw()}
+function restart(){clearInterval(T);S=S0();used={};draw()}
+function again(){const g=S.game,p=S.players;clearInterval(T);S=S0();S.game=g;S.players=p;S.step=3;draw()}
+function pick(g){S.game=g;go(2)}
+function addP(t){const i=$("pn");const v=i.value.trim();if(!v)return;S.players.push({n:v,t});i.value="";draw();$("pn").focus()}
+function flip(i){S.players[i].t=S.players[i].t==="A"?"B":"A";draw()}
+function del(i){S.players.splice(i,1);draw()}
+function balance(){S.players.forEach((p,i)=>p.t=i%2?"B":"A");draw()}
+const team=t=>S.players.filter(p=>p.t===t);
+const ind=()=>S.game&&G[S.game].ind;
+const cur=()=>{if(ind())return{t:"",p:S.players[S.turn]};const t=S.turn?"B":"A",l=team(t);return{t,p:l[S.pi[t]%l.length]}};
+function tl(){return fb()?(S.half===3?300:600):G[S.game].t}
+function startGame(){S.round=1;S.turn=0;S.half=1;S.hist=[];S.sc={A:0,B:0};S.pi={A:0,B:0};S.ps=S.players.map(()=>0);S.gl=[];S.tb=false;newCard();go(4)}
+async function newCard(keep){
+ if(!keep){clearInterval(T);S.run=false;S.left=tl();S.reveal=false;S.clue=1;S.words=0;S.goals={A:0,B:0}}S.card=null;S.loading=true;S.src="";S.pic="";
+ const g=S.game;let c=null;
+ try{const sm=await ai.use();if(sm){const avoid=(used[g]||[]).join(" | ");
+  c=await sm.json("Create "+AIP[g]+" Keep it family-friendly and factually safe. Keep the text under 25 words in plain language. A football mission always gives exactly +1 bonus point and the host checks it by watching the match; never mention systems or statistics. Do not repeat: "+avoid+". Return JSON only.",{cache:false,modelTier:"quick"});
+  if(c&&(c.q||c.a)){S.src="AI-generated"}else c=null}}catch(e){c=null}
+ if(!c){const b=BANK[g],u=(used[g]||[]).length;c=b[u%b.length];S.src="Backup card · AI unavailable"}
+ (used[g]=used[g]||[]).push(c.q||c.a);S.card=c;S.loading=false;if(S.step===4)draw();pic(c)}
+function tick(){S.left--;const e=$("tm");if(S.left<=0){S.left=0;clearInterval(T);S.run=false;try{navigator.vibrate&&navigator.vibrate(300)}catch(e){}draw();return}
+ if(e){e.textContent=fmt(S.left);e.classList.toggle("low",S.left<=10)}const bf=$("bf");if(bf)bf.style.width=S.left/tl()*100+"%"}
+const fmt=s=>String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0");
+function toggle(){if(S.run){clearInterval(T);S.run=false}else if(S.left>0){S.run=true;T=setInterval(tick,1000)}draw()}
+function goal(t,d){S.goals[t]=Math.max(0,S.goals[t]+d);draw();if(S.half===3&&d>0){clearInterval(T);S.run=false;go(5)}}
+function toResult(){clearInterval(T);S.run=false;go(5)}
+function award(pts,winner){ if(ind())return awardI(pts);
+ const r=S.hist.find(h=>h.r===S.round)||(S.hist.push({r:S.round,tb:S.tb,A:0,B:0}),S.hist[S.hist.length-1]);
+ const t=winner||(S.turn?"B":"A");r[t]+=pts;S.sc[t]+=pts;
+ S.pi[S.turn?"B":"A"]++;
+ if(S.turn===0){S.turn=1;newCard();go(4)}
+ else{S.turn=0;if(S.round>=S.rounds&&S.sc.A!==S.sc.B&&!S.tb||S.tb&&S.sc.A!==S.sc.B){go(6)}
+  else{if(S.round>=S.rounds)S.tb=true;S.round++;newCard();go(4)}}}
+function fbConfirm(bonus){
+ const g=S.goals;let a=g.A,b=g.B;if(bonus==="A")a++;if(bonus==="B")b++;
+ S.hist.push({r:S.half,tb:S.half===3,A:a,B:b,g:g.A+"–"+g.B});S.sc.A+=a;S.sc.B+=b;
+ if(S.half===1){S.half=2;newCard();go(4)}
+ else if(S.half===2&&S.sc.A===S.sc.B){S.half=3;newCard();go(4)}
+ else go(6)}
+function pen(t){S.sc[t]++;S.pen=true;S.hist.push({r:"PK",tb:true,A:t==="A"?1:0,B:t==="B"?1:0,g:"Penalties"});draw()}
+function ruleF(){return["⏱️ Time: 2 halves of 10 minutes. The host starts and stops the timer.","⚽ Points: 1 goal = 1 point. The host taps the scorer’s name to record it.","⭐ Bonus: every half has an AI challenge card. If the host says a team did it, that team gets +1 point.","🤝 Tie: if the score is level, play 5 minutes of golden goal. First goal wins. Still level? Penalties."]}
+function rule(){const g=G[S.game];if(fb())return ruleF();return ruleP(g)}
+function ruleP(g){const t=g.t+" seconds per turn.";
+ if(ind())return[`Points: ${g.pts}.`,`Time: ${t} Each player gets ${S.rounds} turns, one after another.`,"Tie: tied leaders play extra sudden-death rounds until one player is ahead.","Judging: the host decides every answer."];
+ return[`Points: ${g.pts}.`,`Time: ${t} ${S.rounds} rounds; Team A then Team B each round.`,"Tie: sudden-death rounds (one turn each) until one team is ahead.","Judging: the host decides every answer."]}
+function tryAgain(){clearInterval(T);S.left=tl();S.run=false;S.reveal=false;S.clue=1;S.words=0;go(4)}
+function manual(t){const r=S.hist.find(h=>h.r===S.round)||(S.hist.push({r:S.round,tb:S.tb,A:0,B:0}),S.hist[S.hist.length-1]);r[t]++;S.sc[t]++;draw()}
+function awardI(p){const n=S.players.length;let r=S.hist.find(h=>h.r===S.round);if(!r){r={r:S.round,tb:S.tb,s:S.players.map(()=>0)};S.hist.push(r)}
+ r.s[S.turn]+=p;S.ps[S.turn]+=p;S.turn++;
+ if(S.turn<n){newCard();go(4);return}
+ S.turn=0;const m=Math.max(...S.ps),lead=S.ps.filter(x=>x===m).length;
+ if(S.round>=S.rounds&&lead===1)return go(6);
+ if(S.round>=S.rounds)S.tb=true;S.round++;newCard();go(4)}
+function s2i(){return`<h2>${G[S.game].e} 2 · Players</h2><div class="card"><p class="tag">Solo game: every player plays for themselves.</p><input id="pn" placeholder="Player name" onkeydown="if(event.key==='Enter')addP('A')"><button style="margin-top:8px;width:100%" onclick="addP('A')">Add player</button></div><div class="card">${S.players.map((p,i)=>`<div class="pl"><span>${i+1}. ${esc(p.n)}</span><button class="sec" style="padding:6px 10px" onclick="del(${i})">✕</button></div>`).join("")||'<p class="mut">Add at least 2 players.</p>'}</div><div class="row"><button class="sec" onclick="go(1)">Back</button><button ${S.players.length>1?"":"disabled"} onclick="go(3)">Save players</button></div>`}
+function s6i(){const o=S.players.map((p,i)=>({n:p.n,s:S.ps[i]})).sort((x,y)=>y.s-x.s);
+ return`<h2>🏆 6 · Final results</h2><div class="card"><div class="win">${esc(o[0].n)} wins!</div><table>${o.map((x,i)=>`<tr><td>${i+1}</td><td style="text-align:left">${esc(x.n)}</td><td><b>${x.s}</b></td></tr>`).join("")}</table></div><div class="card"><table><tr><th>Round</th>${S.players.map(p=>`<th>${esc(p.n)}</th>`).join("")}</tr>${S.hist.map(h=>`<tr><td>${h.tb?"TB ":""}${h.r}</td>${h.s.map(v=>`<td>${v}</td>`).join("")}</tr>`).join("")}</table></div>${rc()}<div class="row"><button onclick="again()">Play again</button><button class="sec" onclick="S.game=null;go(1)">Choose another game</button></div>`}
+const PT={football:"a football stadium at golden hour with a ball, goal posts and a cheering crowd",riddle:"a cosy Emirati majlis with a golden dallah coffee pot, dates and cushions",pearl:"a traditional wooden dhow sailing on a calm sea with shells",souq:"a colourful Arabian souq stall with lanterns, spices and fabrics",landmark:"a desert skyline at sunset with dunes, palm trees and an old fort"};
+let pk=0;
+async function pic(c){const k=++pk,g=S.game;S.pic="";S.pl=true;if(S.step===4)draw();
+ try{const sm=await ai.use();if(sm){const r=await sm(`Draw ${PT[g]}${g==="football"&&c&&c.q?", inspired by this mission: "+c.q:""} as ONE flat, colourful, child-friendly SVG illustration. Use viewBox="0 0 400 180", warm UAE colours, no text, no scripts, no external images. Variation ${k}. Reply with the SVG code only.`,{cache:false,modelTier:"quick"});
+  const m=(r.text||"").match(/<svg[\s\S]*<\/svg>/i);if(m&&k===pk&&!/<script|onload|onerror/i.test(m[0]))S.pic="data:image/svg+xml;charset=utf-8,"+encodeURIComponent(m[0])}}catch(e){}
+ if(k===pk){S.pl=false;if(S.step===4)draw()}}
+function picHtml(){const b="width:100%;border-radius:12px;margin-bottom:10px;";
+ if(S.pic)return`<img alt="AI-drawn picture" src="${S.pic}" style="${b}"><div class="tag" style="margin-bottom:8px">🎨 AI-drawn picture</div>`;
+ if(S.pl)return`<div class="mut" style="${b}height:90px;display:flex;align-items:center;justify-content:center;border:1px dashed var(--line)">🎨 AI is drawing a picture…</div>`;
+ return`<button class="sec" style="margin-bottom:10px" onclick="pic(S.card)">🎨 Try AI picture again</button>`}
+function rc(){return`<div class="card">${S.pic?`<img alt="AI-drawn picture" src="${S.pic}" style="width:100%;border-radius:12px;margin-bottom:8px">`:""}<span class="tag">🤖 AI winner shout-out</span><p class="big">${esc(S.recap||"AI is writing the shout-out…")}</p></div>`}
+async function recap(){S.recap="";let t="";
+ try{const sm=await ai.use();if(sm){const r=await sm(`Write a fun 2-sentence winner shout-out for a UAE family game day. Game: ${G[S.game].n}. Result: ${ind()?S.players.map((p,i)=>p.n+" "+S.ps[i]).join(", "):"Team A "+S.sc.A+", Team B "+S.sc.B}. Players: ${S.players.map(p=>p.n).join(", ")}. Warm and family-friendly, plain text only.`,{cache:false,modelTier:"quick"});t=r.text}}catch(e){}
+ S.recap=t||"Great game, everyone! Well played.";if(S.step===6)draw()}
+function hint(){const f=fb();return[0,"Tap a game to start.",f?"Add everyone, then choose Team A or Team B for each player.":"Add the players. Everyone needs a team (or just a name for solo games).","Read the rules out loud, then press Everyone ready.",f?"Press Start timer, play, and tap a player’s name each time they score.":"Press Start timer. The player reads the card and answers out loud.",f?"Host: choose which team completed the challenge card.":"Host: decide if the answer was right and tap the result.","Here is who won. Play again or pick a new game!"][S.step]}
+function goalP(i){const p=S.players[i];S.goals[p.t]++;S.gl.push({t:p.t,n:p.n,h:S.half});if(S.half===3){clearInterval(T);S.run=false;go(5)}else draw()}
+function undoGoal(){const g=S.gl[S.gl.length-1];if(g&&g.h===S.half){S.gl.pop();S.goals[g.t]--;draw()}}
+function scorers(){const col=t=>`<div class="card"><span class="pill ${t}">Team ${t}</span><div class="timer" style="font-size:2.4rem">${S.goals[t]}</div><p class="tag">Tap who scored:</p>${S.players.map((p,i)=>p.t===t?`<button class="sec" style="margin:3px" onclick="goalP(${i})">⚽ ${esc(p.n)}</button>`:"").join("")}</div>`;
+ return`<div class="grid g2">${col("A")}${col("B")}</div><div class="card"><b>Goals this match</b>${S.gl.length?S.gl.map(g=>`<div class="pl"><span>⚽ ${esc(g.n)}</span><span class="pill ${g.t}">${g.t}</span></div>`).join(""):'<p class="mut">No goals yet.</p>'}<button class="sec" style="margin-top:8px" onclick="undoGoal()">Undo last goal</button></div>`}
+function draw(){
+ $("steps").innerHTML=[1,2,3,4,5,6].map(i=>`<i class="${i<=S.step?"on":""}"></i>`).join("");
+ const f=[0,s1,s2,s3,s4,s5,s6][S.step];$("app").innerHTML=`<p class="mut" style="margin:0 0 6px">👉 ${hint()}</p>`+f();if(window._ls!==S.step)window.scrollTo(0,0);window._ls=S.step}
+function s1(){return`<h2>1 · Choose a game</h2><div class="grid">${Object.entries(G).map(([k,g])=>`<button class="card game" onclick="pick('${k}')"><span class="e">${g.e}</span><span><b>${g.n}</b><small>${g.d}</small></span></button>`).join("")}</div>`}
+function s2(){if(ind())return s2i();const row=(p,i)=>`<div class="pl"><span>${esc(p.n)} <span class="pill ${p.t}">Team ${p.t}</span></span><span><button class="sec" style="padding:6px 10px" onclick="flip(${i})">Swap</button> <button class="sec" style="padding:6px 10px" onclick="del(${i})">✕</button></span></div>`;
+ const ok=team("A").length&&team("B").length;
+ return`<h2>${G[S.game].e} 2 · Set up your teams</h2><div class="card"><input id="pn" placeholder="Player name" onkeydown="if(event.key==='Enter')addP(team('A').length<=team('B').length?'A':'B')"><div class="row" style="margin-top:8px"><button class="ok" onclick="addP('A')">Add to Team A</button><button onclick="addP('B')">Add to Team B</button></div></div>
+ <div class="card"><b>Roster (${S.players.length})</b>${S.players.map(row).join("")||'<p class="mut">Add at least one player per team.</p>'}<button class="sec" style="margin-top:10px" onclick="balance()">Auto-balance teams</button></div>
+ <div class="row"><button class="sec" onclick="go(1)">Back</button><button ${ok?"":"disabled"} onclick="go(3)">Save teams</button></div>`}
+function s3(){const g=G[S.game];
+ return`<h2>${g.e} 3 · Rules & ready</h2><div class="card"><b>${g.n}</b><ul class="r">${rule().map(r=>`<li>${r}</li>`).join("")}</ul>
+ ${fb()?"":`<label class="tag">Rounds</label><select onchange="S.rounds=+this.value">${[2,3,4,5].map(n=>`<option ${n===S.rounds?"selected":""}>${n}</option>`).join("")}</select>`}
+ <p class="tag">The app only keeps time and score. Cards are AI-written, but players and the host judge every answer.</p></div>
+ ${ind()?`<div class="card"><b>Players:</b> ${S.players.map(p=>esc(p.n)).join(", ")}</div>`:`<div class="score card"><div><span class="pill A">Team A</span><br>${team("A").map(p=>esc(p.n)).join(", ")}</div><div><span class="pill B">Team B</span><br>${team("B").map(p=>esc(p.n)).join(", ")}</div></div>`}
+ <div class="row"><button class="sec" onclick="go(2)">Back</button><button class="ok" onclick="startGame()">Everyone ready</button></div>`}
+function head(){const c=cur();return fb()?`<div class="row"><span><b>${S.half===3?"Golden goal":"Half "+S.half+" of 2"}</b></span></div>`:`<div class="row"><span><b>Round ${S.round}${S.tb?" · tie-break":""} of ${S.rounds}</b></span><span style="text-align:right">${c.t?`<span class="pill ${c.t}">Team ${c.t}</span> `:""}<b>${esc(c.p.n)}</b>’s turn</span></div>`}
+function live(){if(ind())return`<div class="score card">${S.players.map((p,i)=>`<div><span class="tag">${esc(p.n)}</span><b>${S.ps[i]}</b></div>`).join("")}</div>`;return`<div class="score card"><div><span class="pill A">A</span><b>${S.sc.A+(fb()?S.goals.A:0)}</b></div><div><span class="pill B">B</span><b>${S.sc.B+(fb()?S.goals.B:0)}</b></div></div>`}
+function body(){const c=S.card;if(S.loading||!c)return`<p class="mut">🤖 AI is writing your card…</p>`;
+ if(S.game==="landmark")return`<p class="tag">Clue shown to the players:</p><p class="big">🔎 ${esc(c.clues[0])}</p><p class="mut">Host reveals more clues on the next screen when needed.</p>`;
+ if(S.game==="souq")return`<p class="tag">Category</p><p class="big"><b>${esc(c.q)}</b></p><p class="mut">Say as many as you can before the clock hits zero.</p>`;
+ return`<p class="big">${esc(c.q)}</p>`}
+function s4(){const c=S.card;
+ return`<h2>${G[S.game].e} 4 · ${fb()?"Match":"Game"} on</h2>${head()}${live()}
+ <div class="card"><div class="tag" style="text-align:center">Time left</div><div class="timer ${S.left<=10?"low":""}" id="tm">${fmt(S.left)}</div><div class="bar"><i id="bf" style="width:${S.left/tl()*100}%"></i></div><div class="row"><button onclick="toggle()" ${S.left<=0?"disabled":""}>${S.run?"Pause":S.left===tl()?"Start timer":"Resume"}</button><button class="sec" onclick="${fb()?"newCard(1);draw()":"newCard()"}">${fb()?"New challenge card":"New card"}</button></div>${S.left<=0?'<p class="no" style="background:none;color:var(--red);text-align:center;font-weight:700">Time’s up!</p>':""}</div>
+ <div class="card">${picHtml()}<span class="tag">🤖 AI challenge card · ${S.src}</span>${body()}${S.src.startsWith("Backup")?`<button class="sec" style="margin-top:8px" onclick="newCard(1);draw()">🤖 Try AI again</button>`:""}</div>
+ ${fb()?scorers():""}
+ <button style="width:100%" ${S.loading?"disabled":""} onclick="toResult()">${fb()?"End half → record result":"Done → host records result"}</button>`}
+function s5(){const g=S.game,c=S.card,t=cur().t,P=G[g].pm;
+ if(fb())return`<h2>⚽ 5 · Record the result</h2><div class="card"><b>${S.half===3?"Golden goal":"Half "+S.half} goals</b><p class="big">Team A ${S.goals.A} – ${S.goals.B} Team B</p><p class="tag">Mission: ${esc(c.q)}</p><b>Who completed the mission? (+1 bonus)</b><div class="grid" style="margin-top:8px"><button class="ok" onclick="fbConfirm('A')">Team A</button><button onclick="fbConfirm('B')">Team B</button><button class="sec" onclick="fbConfirm()">Nobody</button></div></div><button class="sec" onclick="go(4)">Back to match</button>`;
+ const ans=g==="landmark"?esc(c.a):c.a?esc(c.a):"";
+ let ctl="";
+ if(g==="souq")ctl=`<p><b>Valid words counted by the host</b></p><div class="row"><button class="sec fit" onclick="S.words=Math.max(0,S.words-1);draw()">−</button><div class="timer" style="font-size:2.4rem">${S.words}</div><button class="sec fit" onclick="S.words++;draw()">+</button></div><button class="ok" style="width:100%;margin-top:8px" onclick="award(S.words)">Confirm ${S.words} point${S.words==1?"":"s"} for Team ${t}</button>`;
+ else if(g==="landmark")ctl=`<p><b>Revealed clues</b></p>${c.clues.slice(0,S.clue).map((x,i)=>`<p>${i+1}. ${esc(x)}</p>`).join("")}${S.clue<3?`<button class="sec" onclick="S.clue++;draw()">Reveal clue ${S.clue+1}</button>`:""}<div class="grid g2" style="margin-top:10px"><button class="ok" onclick="award(${[5,3,1][S.clue-1]})">Correct · +${[5,3,1][S.clue-1]}</button><button class="no" onclick="award(0)">Incorrect · 0</button></div>`;
+ else ctl=`<div class="grid g2"><button class="ok" onclick="award(${P})">Correct · +${P}</button><button class="no" onclick="award(0)">Incorrect · 0</button></div>`;
+ return`<h2>${G[g].e} 5 · Record the result</h2><div class="card">${t?`<span class="pill ${t}">Team ${t}</span> `:""}<b>${esc(cur().p.n)}</b><p class="mut">Host only: you are the judge.</p>${g==="souq"?"":`<p class="tag">${esc(c.q||"Who or what is it?")}</p>`}${ans?`<button class="sec" onclick="S.reveal=!S.reveal;draw()">${S.reveal?"Hide":"Show"} answer</button>${S.reveal?`<p class="big"><b>${ans}</b></p>`:""}`:""}</div><div class="card">${ctl}</div><div class="card"><button class="sec" style="width:100%" onclick="tryAgain()">Try again (same card, reset timer)</button>${ind()?"":`<p class="tag" style="margin:10px 0 4px">Add a manual point</p><div class="row"><button class="sec" onclick="manual('A')">+1 Team A</button><button class="sec" onclick="manual('B')">+1 Team B</button></div>`}<p class="tag">Correct or Incorrect saves the result and moves to the next turn.</p></div>${live()}`}
+function s6(){if(ind())return s6i();const a=S.sc.A,b=S.sc.B,w=a>b?"A":b>a?"B":null;
+ return`<h2>🏆 6 · Final results</h2><div class="card"><div class="win">${w?`Team ${w} wins!`:"It’s a draw!"}</div><div class="score"><div><span class="pill A">Team A</span><b>${a}</b></div><div><span class="pill B">Team B</span><b>${b}</b></div></div></div>
+ ${!w&&fb()?`<div class="card"><b>Penalty shoot-out winner (host decides)</b><div class="row" style="margin-top:8px"><button class="ok" onclick="pen('A')">Team A</button><button onclick="pen('B')">Team B</button></div></div>`:""}
+ <div class="card"><table><tr><th>${fb()?"Period":"Round"}</th><th>A</th><th>B</th></tr>${S.hist.map(h=>`<tr><td>${h.tb?"TB ":""}${fb()&&h.r!=="PK"?(h.r===3?"Golden goal":"Half "+h.r):h.r}</td><td>${h.A}</td><td>${h.B}</td></tr>`).join("")}</table></div>
+ ${rc()}${fb()&&S.gl.length?`<div class="card"><b>Goal scorers</b>${S.gl.map(g=>`<div class="pl"><span>⚽ ${esc(g.n)}</span><span class="pill ${g.t}">${g.t}</span></div>`).join("")}</div>`:""}<div class="row"><button onclick="again()">Play again</button><button class="sec" onclick="S.sc={A:0,B:0};S.game=null;go(1)">Choose another game</button></div>`}
+draw();
+</script></body></html>
