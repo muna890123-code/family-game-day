@@ -58,7 +58,7 @@ th{font-size:.7rem;text-transform:uppercase;letter-spacing:.08em;color:var(--mut
 <div class="steps" id="steps"></div><div id="app"></div></main>
 <script>
 const ai={use:async()=>{
- const ask=async p=>{const r=await fetch("/.netlify/functions/ai",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({prompt:p})});if(!r.ok)throw new Error("AI unavailable");return(await r.json()).text};
+ const ask=async p=>{const r=await fetch("/.netlify/functions/generate-challenge",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({prompt:p})});if(!r.ok)throw new Error("AI unavailable");return(await r.json()).text};
  const sm=async p=>({text:await ask(p)});
  sm.json=async p=>JSON.parse((await ask(p)).replace(/```json|```/g,"").trim());
  return sm}};
